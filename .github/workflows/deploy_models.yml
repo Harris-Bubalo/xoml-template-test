@@ -1,0 +1,40 @@
+name: Model Deployment
+on:
+  workflow_dispatch:
+    inputs:
+      account-name: 
+        type: choice
+        required: true
+        description: AWS Account
+        default: data-science-dev
+        options:
+          - data-science-dev
+          - data-science-stage
+          - data-science-prod
+      xoml-config:
+        type: string
+        description: Configuration file name
+        required: true
+        default: xoml-config.yml
+      wait:
+        type: boolean
+        description: Wait
+        default: true
+      wait-timeout:
+        type: number
+        description: Wait Timeout (seconds)
+        default: 1200
+
+jobs:
+  deploy_models:
+    name: ModelDeployment
+    uses: xometry/xoml-infrastructure/.github/workflows/.xoml-deployment-pipeline.yml@main
+    with:
+      xoml-config: ${{ github.event.inputs.xoml-config }}
+      account-name: ${{ github.event.inputs.account-name }}
+      smoke-test: true
+      payload-file: payload.json
+      response-schema: response.schema
+      payload-content-type: application/json
+      wait: ${{ github.event.inputs.wait }}
+      wait-timeout: ${{ github.event.inputs.wait-timeout }}

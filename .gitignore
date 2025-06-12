@@ -1,0 +1,26 @@
+# python
+.python-version
+*.pyc
+.venv/*
+
+# vscode
+settings.json
+.vscode/*
+
+# pycharm
+.idea/*
+
+**/node_modules
+client/build
+
+.mypy_cache
+
+.idea
+
+database.db
+
+.pypi_access_token
+
+.DS_Store
+
+*.egg-info

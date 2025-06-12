@@ -1,0 +1,20 @@
+name: Training Pipeline Deployment
+ 
+on:
+  push:
+    branches:
+      - staging
+      - stage
+      - main
+      - master
+
+jobs:
+  deploy_pipeline:
+    name: PipelineDeployment
+    uses: xometry/xoml-infrastructure/.github/workflows/.xoml-training-pipeline.yml@main
+    with:
+      xoml-config: xoml-config.yml
+      account: data-science
+      start-pipeline: true
+      wait: true
+      wait-timeout: 600

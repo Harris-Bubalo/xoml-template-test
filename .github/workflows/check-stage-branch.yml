@@ -1,0 +1,22 @@
+name: Check Stage Branch
+description: "Status check to determine pull requests only come from the stage branch"
+
+on:
+    pull_request:
+        types:
+            - opened
+        branches:
+            - stage
+
+jobs:
+    check-stage-branch:
+        runs-on: self-hosted
+        if: ${{ !github.event.repository.is_template }}
+        steps:
+            - name: Stage Branch Check
+              shell: bash
+              run: |
+                if [[ "${{ github.head_ref }}" != "dev" ]]; then
+                    echo "Error: Pull requests to stage must come from the dev branch"
+                    exit 1
+                fi
